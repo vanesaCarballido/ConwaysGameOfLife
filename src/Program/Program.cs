@@ -9,12 +9,7 @@ namespace Ucu.Poo.GameOfLife
             Console.WriteLine("Hello World!");
             string tablero01= Leer.LeerTablero("C:\Users\Isabela\Desktop\Repositorios\ConwaysGameOfLife\assets\board.txt");
             bool [,] tableroTrueFalse = Matriz.CrearTablero(tablero01);
-            for (int i = 0; i <= 10; i++)
-            {
-                Lógica.Jugar(tableroTrueFalse);
-                
-                
-            }
+            
             
             /*
              * 1: Leo el archivo

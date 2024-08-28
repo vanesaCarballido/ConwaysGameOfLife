@@ -2,7 +2,7 @@ namespace Ucu.Poo.GameOfLife;
 
 public class Lógica
 {
-    public static void Jugar(bool[,] tableroBool)
+    public static bool [,] Jugar(bool[,] tableroBool)
     {
         bool[,] gameBoard = tableroBool;
         int boardWidth = gameBoard.GetLength(10);
@@ -51,6 +51,7 @@ public class Lógica
             }
         }
         gameBoard = cloneboard;
+        return gameBoard;
     }
    
 }

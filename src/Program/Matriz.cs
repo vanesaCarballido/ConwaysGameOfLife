@@ -5,7 +5,7 @@ namespace Ucu.Poo.GameOfLife;
 public class Matriz
 {
     public static bool[,] CrearTablero(string content)
-    {
+    { ;
         string[] contentLines = content.Split('\n');
         bool[,] board = new bool[contentLines.Length, contentLines[0].Length];
         for (int  y=0; y<contentLines.Length;y++)
