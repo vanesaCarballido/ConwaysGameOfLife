@@ -1,10 +1,7 @@
-using System.IO;
 namespace Ucu.Poo.GameOfLife;
 
 public class Matriz
 {
-    string url = "ruta del archivo";
-    string content = File.ReadAllText(url);
     string[] contentLines = content.Split('\n');
     bool[,] board = new bool[contentLines.Length, contentLines[0].Length];
         for (int  y=0; y<contentLines.Length;y++)
