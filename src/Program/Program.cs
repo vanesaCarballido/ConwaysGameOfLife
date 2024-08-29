@@ -9,7 +9,7 @@ namespace Ucu.Poo.GameOfLife
             Console.WriteLine("Hello World!");
             string tablero01= Leer.LeerTablero("./board.txt");
             bool [,] tableroTrueFalse = Matriz.CrearTablero(tablero01);
-            Imprimir.imprimirTablero(tableroTrueFalse);
+            //Imprimir.imprimirTablero(tableroTrueFalse);
             int width = tableroTrueFalse.GetLength(0);
             int height = tableroTrueFalse.GetLength(1);
             
