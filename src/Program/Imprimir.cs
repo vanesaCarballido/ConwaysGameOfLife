@@ -1,35 +1,35 @@
+
+using System;
 using System.Text;
+using System.Threading;
 namespace Ucu.Poo.GameOfLife;
 
 public class Imprimir
 {
-   public static void ImprimirTablero()
+   public static void imprimirTablero(bool[,] board)
    {
-      bool[,] b = //variable que representa el tablero
-      int width = //variabe que representa el ancho del tablero
-      int height = //variabe que representa altura del tablero
-      while (true)
+      int width = board.GetLength(0);
+      int height = board.GetLength(1);
+      Console.Clear();
+      StringBuilder s = new StringBuilder();
+      for (int y = 0; y<height;y++)
       {
-         Console.Clear();
-         StringBuilder s = new StringBuilder();
-         for (int y = 0; y<height;y++)
+         for (int x = 0; x<width; x++)
          {
-            for (int x = 0; x<width; x++)
+            if(board[x,y])
             {
-               if(b[x,y])
-               {
-                  s.Append("|X|");
-               }
-               else
-               {
-                  s.Append("___");
-               }
+               s.Append("|X|");
             }
-            s.Append("\n");
+            else
+            {
+               s.Append("___");
+            }
          }
-         Console.WriteLine(s.ToString());
-         Lógica.Jugar();
-         Thread.Sleep(300);
+         s.Append("\n");
       }
+
+      Console.WriteLine(s.ToString());
+      Thread.Sleep(300);
+      
    }
 }
