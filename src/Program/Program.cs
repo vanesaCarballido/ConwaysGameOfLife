@@ -1,59 +1,49 @@
-﻿using System;
+﻿/*Clases y responsabilidades:
+Distribuimos las responsabilidades en cuatro clases diferentes: "Leer", "Matriz", "Lógica" e "Imprimir". 
+
+La clase Leer tiene la responsabilidad de leer el archivo que contiene los valores iniciales de las células. 
+Esta clase cumple con el principio SRP al tener una sola razón de cambio. Si tuviera distintos tipos de archivos
+para leer podríamos editar esa clase y no afectaría a las demás (o crear nuevas). También cumple con Expert porque conoce 
+el url del archivo a leer por lo que es la clase óptima para cumplir esta responsabilidad. No colabora con ninguna clase.
+
+La clase Matriz tiene la responsabilidad de crear el tablero a partir del archivo que retornó la clase Leer, por lo que
+colabora con ella. Tiene una sola razón de cambio por lo que cumple con SRP. También con Expert porque iene la información 
+necesaria que le permite cumplir con su responsabilidad (conocer el archivo que debe transformar).
+
+La clase Lógica se encarga únicamente de calcular las nuevas generaciones (una única responsabilidad y razón de cambio). 
+Colabora con la clase Matriz y tiene la información necesaria para cumplir su responsabilidad (conoce el tablero que 
+se creó en la clase Matriz).
+
+Por úlitmo la clase Imprimir se encarga de mostrar el tablero en consola. Hacer esta clase nos permite que si
+tuviéramos que implementar nuevas formas de impresión podemos cambiar la clase con nuevos métodos o 
+inventar nuevas clases (si es necesario por SRP) sin afectar el resto del funcionamiento de las clases restantes.
+Cumple con Expert porque es la clase ideal para realizar esta responsabilidad ya que conoce cada tablero de cada
+generación que va calculando la clase Lógica (colabora con ella).
+*/
+
+using System;
 
 namespace Ucu.Poo.GameOfLife
 {
-    /*Esta rama crea la parte lógica del juego, creando a partir de todas las especificaciones para una célula un nuevo tablero el cual
-     luego se imprimirá*/
-        bool[,] gameBoard =  /* contenido del tablero */;
-        int boardWidth = gameBoard.GetLength(0); //obteiene las dimensiones del tablero
-        int boardHeight = gameBoard.GetLength(1);
-
-        bool[,] cloneboard = new bool[boardWidth, boardHeight]; //crea un nuevo board con las mismas medidas que el anterior
-            
-        for (int x = 0; x<boardWidth; x++) //recorre el tablero
+    class Program 
+    /*La clase Program ejecuta todas las responsabilidades de las clases en una sola.
+     Primero lee el archivo (en clase Leer), luego crea el tablero (en clase Matriz), ejecuta el juego (en clase Lógica) 
+     y finalmente imprime el tablero para que se pueda visualizar (en clase Imprimir). Estas últimas dos responsabilidades 
+     en un bucle while para que se puedan ir calculando las nuevas generaciones y mostrarlas en consola.*/
+    
+    {
+        static void Main(string[] args)
         {
-            for (int y = 0; y < boardHeight; y++)
+            Console.WriteLine("Game of Life");
+            string tablero01= Leer.LeerTablero("./board.txt"); //Lee el archivo board que es el que tiene el tablero de 0´s y 1´s
+            bool [,] tableroTrueFalse = Matriz.CrearTablero(tablero01); //Crea el tablero a partir de los 0´s y 1´s cambiándolos por True o False           
+            while (true)
             {
-                int aliveNeighbors = 0;
-                for (int i = x - 1; i <= x + 1; i++)
-                {
-                    for (int j = y - 1; j <= y + 1; j++)
-                    {
-                        if (i >= 0 && i < boardWidth && j >= 0 && j < boardHeight && gameBoard[i, j]) //calcula si tiene más vecinos vivos y los va sumando
-                        {
-                            aliveNeighbors++;
-                        }
-                    }
-                }
-                //a partir de acá es la lógica del juego:
-                //resta 1 vecino:
-                if (gameBoard[x, y]) 
-                {
-                    aliveNeighbors--;
-                }
-
-                //Celula muere por baja población
-                if (gameBoard[x, y] && aliveNeighbors < 2)
-                {
-                    cloneboard[x, y] = false;
-                }
-                //Celula muere por sobrepoblación:
-                else if (gameBoard[x, y] && aliveNeighbors > 3)
-                {
-                    cloneboard[x, y] = false;
-                }
-                //Celula nace por reproducción:
-                else if (!gameBoard[x, y] && aliveNeighbors == 3)
-                {
-                    cloneboard[x, y] = true;
-                }
-                //Celula mantiene el estado que tenía:
-                else
-                {
-                    cloneboard[x, y] = gameBoard[x, y];
-                }
+                tableroTrueFalse = Logica.Jugar(tableroTrueFalse);  //Calcula la nueva generación 
+                Imprimir.imprimirTablero(tableroTrueFalse); //Imprime el tablero para que se puedan visualizar los ciclos de vida
             }
-        }
-        gameBoard = cloneboard; //iguala el board original con el nuevo, con el juego
-    }
 
+            
+        }
+    }
+}
