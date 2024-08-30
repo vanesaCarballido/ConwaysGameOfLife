@@ -1,7 +1,4 @@
-using System.Net;
-
 namespace Ucu.Poo.GameOfLife;
-
 public class Matriz
 {
     public static bool[,] CrearTablero(string content)

@@ -1,5 +1,4 @@
 namespace Ucu.Poo.GameOfLife;
-
 public class Logica
 {
     public static bool [,] Jugar(bool[,] tableroBool)
