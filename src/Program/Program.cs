@@ -1,4 +1,5 @@
-﻿/*Clases y responsabilidades:
+Matrix
+/*Clases y responsabilidades:
 Distribuimos las responsabilidades en cuatro clases diferentes: "Leer", "Matriz", "Lógica" e "Imprimir". 
 
 La clase Leer tiene la responsabilidad de leer el archivo que contiene los valores iniciales de las células. 
