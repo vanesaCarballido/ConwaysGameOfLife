@@ -2,51 +2,58 @@
 
 namespace Ucu.Poo.GameOfLife
 {
-    bool[,] gameBoard = /* contenido del tablero */;
-    int boardWidth = gameBoard.GetLength(0);
-    int boardHeight = gameBoard.GetLength(1);
+    /*Esta rama crea la parte lógica del juego, creando a partir de todas las especificaciones para una célula un nuevo tablero el cual
+     luego se imprimirá*/
+        bool[,] gameBoard =  /* contenido del tablero */;
+        int boardWidth = gameBoard.GetLength(0); //obteiene las dimensiones del tablero
+        int boardHeight = gameBoard.GetLength(1);
 
-    bool[,] cloneboard = new bool[boardWidth, boardHeight];
-    for (int x = 0; x < boardWidth; x++)
-    {
-        for (int y = 0; y < boardHeight; y++)
+        bool[,] cloneboard = new bool[boardWidth, boardHeight]; //crea un nuevo board con las mismas medidas que el anterior
+            
+        for (int x = 0; x<boardWidth; x++) //recorre el tablero
         {
-            int aliveNeighbors = 0;
-            for (int i = x-1; i<=x+1;i++)
+            for (int y = 0; y < boardHeight; y++)
             {
-                for (int j = y-1;j<=y+1;j++)
+                int aliveNeighbors = 0;
+                for (int i = x - 1; i <= x + 1; i++)
                 {
-                    if(i>=0 && i<boardWidth && j>=0 && j < boardHeight && gameBoard[i,j])
+                    for (int j = y - 1; j <= y + 1; j++)
                     {
-                        aliveNeighbors++;
+                        if (i >= 0 && i < boardWidth && j >= 0 && j < boardHeight && gameBoard[i, j]) //calcula si tiene más vecinos vivos y los va sumando
+                        {
+                            aliveNeighbors++;
+                        }
                     }
                 }
-            }
-            if(gameBoard[x,y])
-            {
-                aliveNeighbors--;
-            }
-            if (gameBoard[x,y] && aliveNeighbors < 2)
-            {
+                //a partir de acá es la lógica del juego:
+                //resta 1 vecino:
+                if (gameBoard[x, y]) 
+                {
+                    aliveNeighbors--;
+                }
+
                 //Celula muere por baja población
-                cloneboard[x,y] = false;
-            }
-            else if (gameBoard[x,y] && aliveNeighbors > 3)
-            {
-                //Celula muere por sobrepoblación
-                cloneboard[x,y] = false;
-            }
-            else if (!gameBoard[x,y] && aliveNeighbors == 3)
-            {
-                //Celula nace por reproducción
-                cloneboard[x,y] = true;
-            }
-            else
-            {
-                //Celula mantiene el estado que tenía
-                cloneboard[x,y] = gameBoard[x,y];
+                if (gameBoard[x, y] && aliveNeighbors < 2)
+                {
+                    cloneboard[x, y] = false;
+                }
+                //Celula muere por sobrepoblación:
+                else if (gameBoard[x, y] && aliveNeighbors > 3)
+                {
+                    cloneboard[x, y] = false;
+                }
+                //Celula nace por reproducción:
+                else if (!gameBoard[x, y] && aliveNeighbors == 3)
+                {
+                    cloneboard[x, y] = true;
+                }
+                //Celula mantiene el estado que tenía:
+                else
+                {
+                    cloneboard[x, y] = gameBoard[x, y];
+                }
             }
         }
+        gameBoard = cloneboard; //iguala el board original con el nuevo, con el juego
     }
-    gameBoard = cloneboard;
-}
+
